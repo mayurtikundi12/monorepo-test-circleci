@@ -24,8 +24,8 @@ jobs:
 
 workflows:
   build-and-deploy-to-ecs-sercice1:
-    when: << pipeline.parameters.project-one >>
     jobs:
+      when: << pipeline.parameters.project-one >>
       - hello-job:
           name: Service One Job 1
           filters:
@@ -33,9 +33,7 @@ workflows:
               only:
                 - circleci-project-setup
 
-  build-and-deploy-to-ecs-sercice1-job2:
-    when: << pipeline.parameters.project-one >>
-    jobs:
+      when: << pipeline.parameters.project-one >>
       - hello-job:
           name: Service One Job 2
           filters:
@@ -43,13 +41,12 @@ workflows:
               only:
                 - circleci-project-setup
 
-  build-and-deploy-to-ecs-sercice2:
-    when: << pipeline.parameters.project-two >>
-    jobs:
+      when: << pipeline.parameters.project-two >>
       - hello-job:
-          name: Service One
+          name: Service Two
           filters:
             branches:
               only:
                 - circleci-project-setup
+
        
