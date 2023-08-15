@@ -1,0 +1,44 @@
+version: 2.1
+
+# executors:
+#   base:
+#     docker:
+#       - image: cimg/base:stable
+
+parameters:
+  service-one:
+    type: boolean
+    default: false
+  service-two:
+    type: boolean
+    default: false
+    
+
+jobs:
+  hello-job:
+    docker:
+      - image: cimg/node:17.2.0 # the primary container, where your job's commands are run
+    steps:
+      - checkout # check out the code in the project directory
+      - run: echo "hello world" # run the `echo` command
+
+workflows:
+  build-and-deploy-to-ecs-sercice1:
+    when: << pipeline.parameters.service-one >>
+    jobs:
+      - hello-job:
+          name: Service One
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
+  build-and-deploy-to-ecs-sercice2:
+    when: << pipeline.parameters.service-two >>
+    jobs:
+      - hello-job:
+          name: Service One
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
+       
